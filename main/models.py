@@ -8,7 +8,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=255)
     file = models.FileField(upload_to="songs/", null=True, blank=True)
     duration = models.IntegerField()
-    coverImage = models.FileField(upload_to="cover_images/", null=True, blank=True)
+    cover_image = models.ImageField(upload_to="cover_images/", null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(SoundUser, on_delete=models.SET_NULL, related_name="songs", null=True, blank=True)
 

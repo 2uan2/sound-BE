@@ -3,7 +3,7 @@ from .models import SoundUser
 from django import forms, forms
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
     class Meta:
         model = SoundUser

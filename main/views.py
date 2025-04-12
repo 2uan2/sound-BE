@@ -1,3 +1,4 @@
+from main.permissions import IsOwner
 from main.serializers import SongSerializer
 from .models import Song
 
@@ -23,5 +24,5 @@ class SongList(ListCreateAPIView):
 class SongDetail(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsOwner]
     
