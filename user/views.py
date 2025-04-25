@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
 from .models import SoundUser
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 class RegistrationView(CreateAPIView):
@@ -42,8 +44,8 @@ class RegistrationView(CreateAPIView):
     #     serializer.save() # perform_create
     #     return Response(serializer.data, status=201)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomAuthToken(ObtainAuthToken):
-
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
