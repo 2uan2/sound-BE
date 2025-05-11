@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 
 
 class SoundUser(AbstractUser):
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
      
     def __str__(self):
         return self.username

@@ -17,7 +17,12 @@ class SongList(ListCreateAPIView):
     serializer_class = SongSerializer
     permission_classes = [IsAuthenticated]
 
+    def post(self, request, *args, **kwargs):
+        print(request)
+        return super().post(request, *args, **kwargs)
+
     def perform_create(self, serializer):
+        print("serializer: ", serializer)
         return serializer.save(uploaded_by=self.request.user)
         # return super().perform_create(serializer)
 

@@ -1,7 +1,7 @@
 from user.serializers import UserSerializer
 
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -11,7 +11,15 @@ from .models import SoundUser
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+class UserProfileView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        user = SoundUser.objects.get(pk=request.user.pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
 class RegistrationView(CreateAPIView):
     queryset = SoundUser.objects.all()
     serializer_class = UserSerializer
@@ -20,8 +28,11 @@ class RegistrationView(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print('serialzier', serializer)
+        
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        print("user", user)
 
         token, created = Token.objects.get_or_create(user=user)
 
