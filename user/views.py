@@ -18,6 +18,7 @@ class UserProfileView(ListAPIView):
     def get(self, request):
         user = SoundUser.objects.get(pk=request.user.pk)
         serializer = UserSerializer(user)
+        print(serializer)
         return Response(serializer.data)
 
 class RegistrationView(CreateAPIView):

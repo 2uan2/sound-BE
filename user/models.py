@@ -5,9 +5,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+# from main.models import Song
 
 class SoundUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    favourite_songs = models.ManyToManyField('main.Song', blank=True, related_name="favourited_by")
      
     def __str__(self):
         return self.username

@@ -11,7 +11,7 @@ class Song(models.Model):
     cover_image = models.ImageField(upload_to="cover_images/", null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(SoundUser, on_delete=models.SET_NULL, related_name="songs", null=True, blank=True)
-    favourited = models.BooleanField(default=False)
+    # favourited = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

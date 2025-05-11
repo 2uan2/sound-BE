@@ -5,5 +5,6 @@ urlpatterns = [
     # path('', views.ExampleClass.as_view(), name="test"),
     path('', views.SongList.as_view(), name="song"),
     path('<int:pk>/', views.SongDetail.as_view(), name="song_detail"),
+    path('<int:pk>/favourite/', views.FavouriteSongDetail.as_view(), name="favourite"),
     # path('example', views.RegistrationView.as_view(), name="example"),
 ]
