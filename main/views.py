@@ -51,12 +51,12 @@ class FavouriteSongDetail(APIView):
         if instance in user.favourite_songs.all():
             print(f'{instance.pk} in {user.favourite_songs.all()}')
             user.favourite_songs.remove(instance)
-            return Response({f"succesfully removed song with id {instance.pk}"})
+            return Response({"message": f"Successfully removed song with id {instance.pk}"})
             # user.favourite_songs.save()
         else:
             print(f'{instance.pk} not in {user.favourite_songs.all()}')
             user.favourite_songs.add(instance)
-            return Response({f"succesfully added song with id {instance.pk}"})
+            return Response({"message": f"Successfully added song with id {instance.pk}"})
             # user.favourite_songs.save()
         # user.favourite_songs.add(serializer.data.pk)
         serializer = UserSerializer(data=user)
