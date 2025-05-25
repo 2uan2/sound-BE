@@ -10,7 +10,6 @@ from rest_framework.authtoken.models import Token
 class SoundUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     favourite_songs = models.ManyToManyField('main.Song', blank=True, related_name="favourited_by")
-     
     def __str__(self):
         return self.username
     

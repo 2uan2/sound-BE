@@ -32,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
     #     for song in obj.songs.filter(favourited=True):
     #         song_ids.append(song.id)
     #     return song_ids
- 
+
     def create(self, validated_data):
         user = SoundUser.objects.create_user(
             username = validated_data['username'],

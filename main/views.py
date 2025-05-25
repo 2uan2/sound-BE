@@ -41,28 +41,19 @@ class FavouriteSongDetail(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
-        user = SoundUser.objects.get(pk=request.user.pk)
-        instance = get_object_or_404(Song, pk=pk)
-        print(instance)
-        print(user)
-        # serializer = SongSerializer(data=instance)
-        # serializer.is_valid(raise_exception=True)
-        print(user.favourite_songs.all())
-        if instance in user.favourite_songs.all():
-            print(f'{instance.pk} in {user.favourite_songs.all()}')
-            user.favourite_songs.remove(instance)
-            return Response({f"succesfully removed song with id {instance.pk}"})
-            # user.favourite_songs.save()
+        user = request.user
+        song = get_object_or_404(Song, pk=pk)
+
+        if song in user.favourite_songs.all():
+            user.favourite_songs.remove(song)
+            status = "removed"
         else:
-            print(f'{instance.pk} not in {user.favourite_songs.all()}')
-            user.favourite_songs.add(instance)
-            return Response({f"succesfully added song with id {instance.pk}"})
-            # user.favourite_songs.save()
-        # user.favourite_songs.add(serializer.data.pk)
-        serializer = UserSerializer(data=user)
-        serializer.is_valid(raise_exception=True)
+            user.favourite_songs.add(song)
+            status = "added"
 
-
-
+        return Response({
+            "song_id": song.pk,
+            "status": f"successfully {status} song from favourites"
+        })
 
         
