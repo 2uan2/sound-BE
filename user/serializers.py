@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SoundUser
-        fields = ['avatar', 'username', 'email', 'password', 'songs', 'favourite_song_instances']# 'favourite_songs', 
+        fields = ['avatar', 'username', 'email', 'password', 'favourite_song_instances']# 'favourite_songs', 
     
     def get_favourite_song_instances(self, obj):
         favourites = []
