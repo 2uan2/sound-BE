@@ -1,8 +1,8 @@
-databases:
-  - name: sound-db
-    plan: free
-    databaseName: sound
-    user: sound
+#databases:
+#  - name: sound-db
+#    plan: free
+#    databaseName: sound
+#    user: sound
 
 services:
   - type: web
@@ -12,10 +12,10 @@ services:
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn sound_be.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:
-      - key: DATABASE_URL
-        fromDatabase: 
-          name: sound-db
-          property: connectionString
+#     - key: DATABASE_URL
+#       fromDatabase: 
+#         name: sound-db
+#         property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
