@@ -4,6 +4,8 @@ from main.serializers import SongSerializer
 from user.models import SoundUser
 from user.serializers import UserSerializer
 from .models import Song
+from .models import Artist
+from .serializers import ArtistSerializer
 
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
@@ -11,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
     
 # class SongViewSet(viewsets.ModelViewSet):
 #     queryset = Song.objects.all()
@@ -56,4 +59,21 @@ class FavouriteSongDetail(APIView):
             "status": f"successfully {status} song from favourites"
         })
 
-        
+class ArtistList(ListCreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+    permission_classes = [AllowAny]  # Anyone can view
+
+class ArtistDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Edit only if logged in
+    
+class SongsByArtist(APIView):
+    permission_classes = [AllowAny]  # or IsAuthenticated if needed
+
+    def get(self, request, artist_id):
+        artist = get_object_or_404(Artist, id=artist_id)
+        songs = Song.objects.filter(artist_fk=artist)
+        serializer = SongSerializer(songs, many=True, context={'request': request})
+        return Response(serializer.data)
